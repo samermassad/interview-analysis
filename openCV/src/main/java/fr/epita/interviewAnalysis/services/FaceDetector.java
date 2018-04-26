@@ -7,16 +7,19 @@ import org.opencv.objdetect.CascadeClassifier;
 
 public class FaceDetector {
 
-	private final CascadeClassifier FACEDETECTOR = new CascadeClassifier("E:\\openCV\\opencv\\sources\\data\\lbpcascades\\lbpcascade_frontalface.xml");
+	private final CascadeClassifier FACEDETECTOR;
 	
 	private Mat FRAME;
 	
+	ConfigurationService conf = ConfigurationService.getInstance();
+	
 	public FaceDetector() {
-		
+		FACEDETECTOR = new CascadeClassifier(conf.getConfigurationValue("frontalFaceDetector.path"));
 	}
 	
 	public FaceDetector(Mat frame) {
 		this.FRAME = frame;
+		FACEDETECTOR = new CascadeClassifier(conf.getConfigurationValue("frontalFaceDetector.path"));
 	}
 	
 	public void setFrame(Mat frame) {
