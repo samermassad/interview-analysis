@@ -21,8 +21,6 @@ public class FaceDetectorTests {
 	
 	@Test
 	public void testCountFaces() {
-		
-		
 		Mat image = imread("src/test/resources/countFaces.jpg");
 		FaceDetector faceDetector = new FaceDetector(image);
 		Assert.assertEquals(3, faceDetector.countFaces());
@@ -30,7 +28,17 @@ public class FaceDetectorTests {
 		image = imread("src/test/resources/countFaces5Persons.png");
 		faceDetector.setFrame(image);
 		Assert.assertEquals(5, faceDetector.countFaces());
+	}
+	
+	@Test
+	public void testGetFacesPosition() {
+		Mat image = imread("src/test/resources/countFaces.jpg");
+		FaceDetector faceDetector = new FaceDetector(image);
+		Assert.assertTrue(faceDetector.getFacesPosition());
 		
+		image = imread("src/test/resources/countFaces5Persons.png");
+		faceDetector.setFrame(image);
+		Assert.assertTrue(faceDetector.getFacesPosition());
 	}
 	
 }
