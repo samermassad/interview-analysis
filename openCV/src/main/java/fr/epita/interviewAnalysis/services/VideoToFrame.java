@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.opencv.core.Mat;
 import org.opencv.videoio.VideoCapture;
 
-import javafx.scene.image.Image;
-
 public class VideoToFrame {
 
 	private VideoCapture capture = new VideoCapture();

@@ -2,58 +2,56 @@ package fr.epita.interviewAnalysis.services;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
-import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
-import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
+import org.opencv.objdetect.Objdetect;
 
-public class FaceDetector {
+public class FaceDetector extends Detector {
 
-	private final CascadeClassifier FACEDETECTOR;
-
-	private Mat FRAME;
-
-	ConfigurationService conf = ConfigurationService.getInstance();
+	private int absoluteFaceSize;
 
 	public FaceDetector() {
-		FACEDETECTOR = new CascadeClassifier(conf.getConfigurationValue("frontalFaceDetector.path"));
+		super();
 	}
-
+	
 	public FaceDetector(Mat frame) {
-		this.FRAME = frame;
-		FACEDETECTOR = new CascadeClassifier(conf.getConfigurationValue("frontalFaceDetector.path"));
+		super(frame);
 	}
-
-	public void setFrame(Mat frame) {
-		this.FRAME = frame;
+	
+	protected void init() {
+		this.absoluteFaceSize = 0;
+		this.DETECTOR = new CascadeClassifier(this.conf.getConfigurationValue("frontalFaceDetector.path"));
 	}
 
 	// detects the faces
 	// returns matrix of rectangles MatOfRect
-	public MatOfRect detectFaces() {
-		MatOfRect faceDetections = new MatOfRect();
-		FACEDETECTOR.detectMultiScale(FRAME, faceDetections);
-		return faceDetections;
+	public MatOfRect detect() {
+		// compute minimum face size (10% of the frame height, in our case)
+		if (this.absoluteFaceSize == 0) {
+			int height = this.GRAYFRAME.rows();
+			if (Math.round(height * 0.1f) > 0) {
+				this.absoluteFaceSize = Math.round(height * 0.1f);
+			}
+		}
+
+		this.DETECTIONS = new MatOfRect();
+		this.DETECTOR.detectMultiScale(this.FRAME, this.DETECTIONS, 1.1, 2, 0 | Objdetect.CASCADE_SCALE_IMAGE,
+				new Size(this.absoluteFaceSize, this.absoluteFaceSize), new Size());
+		
+		this.COUNT = this.DETECTIONS.toArray().length;
+		
+		return this.DETECTIONS;
 	}
 
-	// returns int: the number of faces
-	public int countFaces() {
-		return detectFaces().toArray().length;
-	}
-
-	// returns list of rectangles face positions
-	public boolean getFacesPosition() {
-		// Draw a bounding box around each face.
-		//for (Rect rect : detectFaces().toArray()) {
-		//	Imgproc.rectangle(FRAME, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
-		//			new Scalar(0, 255, 0));
-		//}
-//
-		//String filename = "D:/Desktop/monkey.png";
-		//Imgcodecs.imwrite(filename, FRAME);
-		return true;
+	@Override
+	public void draw() {
+		Rect[] facesArray = this.DETECTIONS.toArray();
+		for (int i = 0; i < facesArray.length; i++) {
+			Imgproc.rectangle(this.FRAME, facesArray[i].tl(), facesArray[i].br(), new Scalar(255, 255, 255), 3);
+		}
 	}
 
 }
