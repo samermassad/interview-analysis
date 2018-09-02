@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
 import org.opencv.core.Mat;
+import org.opencv.core.Rect;
 import org.opencv.videoio.VideoCapture;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -34,6 +35,32 @@ public class VideoUtils {
 	public void release() {
 		this.capture.release();
 	}
+	
+	public void processFrame(Mat frame) {
+		FaceDetector faceDetector = new FaceDetector(frame);
+		EyeDetector eyeDetector = new EyeDetector();
+		IrisDetector irisDetector = new IrisDetector();
+		
+		Rect[] faces = faceDetector.detect().toArray();
+		faceDetector.draw();
+		
+		for(int i = 0; i<faces.length; i++) {
+			Mat face = faceDetector.cropObject(i);
+			eyeDetector.setFrame(face);
+			
+			Rect[] eyes = eyeDetector.detect().toArray();
+			eyeDetector.draw();
+			
+			for(int j = 0; j<eyes.length; j++) {
+				Mat eye = eyeDetector.cropObject(j);
+				irisDetector.setFrame(eye);
+				
+				irisDetector.detect();
+				irisDetector.draw();
+			}
+		}
+	}
+	
 	
 	public static Image mat2Image(Mat frame)
 	{
@@ -69,7 +96,4 @@ public class VideoUtils {
 		
 		return image;
 	}
-
-	
-
 }

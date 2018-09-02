@@ -31,7 +31,7 @@ public class ApplicationController {
 	 */
 	protected void init() {
 		// set a fixed width for the frame
-		outputFrame.setFitWidth(600);
+		//outputFrame.setFitWidth(600);
 		// preserve image ratio
 		outputFrame.setPreserveRatio(true);
 	}
@@ -42,12 +42,13 @@ public class ApplicationController {
 		fileChooser.setTitle("Open video files");
 
 		// TO BE DELETED
-		fileChooser.setInitialDirectory(new File("D:\\Desktop\\HTC Sensation XL\\Video"));
+		fileChooser.setInitialDirectory(new File("D:\\Desktop\\Video Files\\"));
 
 		File file = fileChooser.showOpenDialog(root.getScene().getWindow());
 
 		if (file.isFile()) {
-			filename.setText(file.getAbsolutePath());
+			
+			filename.setText(file.getName());
 			processAndDisplayVideo(file);
 
 		} else {
@@ -66,7 +67,7 @@ public class ApplicationController {
 				if(vUtils.init(file.getAbsolutePath())) {
 					while(vUtils.grab()) {
 						frame = vUtils.retreive();
-//						frame = processFrame();
+						vUtils.processFrame(frame);
 						outputFrame.setImage(VideoUtils.mat2Image(frame));
 					}
 					vUtils.release();
