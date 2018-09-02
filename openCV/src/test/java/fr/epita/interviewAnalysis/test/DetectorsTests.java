@@ -9,18 +9,17 @@ import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.imgcodecs.Imgcodecs;
 
-import fr.epita.interviewAnalysis.services.ConfigurationService;
 import fr.epita.interviewAnalysis.services.EyeDetector;
 import fr.epita.interviewAnalysis.services.FaceDetector;
 import fr.epita.interviewAnalysis.services.IrisDetector;
+import nu.pattern.OpenCV;
 
 public class DetectorsTests {
 
 	@BeforeClass
 	public static void loadLibrary() {
-		ConfigurationService conf = ConfigurationService.getInstance();
-		String path = conf.getConfigurationValue("library.path");
-		System.load(path);
+		// load the native OpenCV library
+		OpenCV.loadShared();
 	}
 
 	@Test
