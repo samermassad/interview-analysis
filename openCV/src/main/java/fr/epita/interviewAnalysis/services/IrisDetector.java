@@ -7,6 +7,8 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
+import fr.epita.interviewAnalysis.development.DevelopmentVariables;
+
 public class IrisDetector extends Detector {
 
 	private double dp, minDist, param1, param2;
@@ -22,12 +24,17 @@ public class IrisDetector extends Detector {
 	
 	@Override
 	protected void init() {
-		this.dp = 1.0;
-		this.minDist = 49.090909090909086;
-		this.param1 = 100.0;
-		this.param2 = 12.5;
-		this.minRad = 7;
-		this.maxRad = 15;
+		// TODO: find and set the final values
+		updateValues();
+	}
+
+	private void updateValues() {
+		this.dp = DevelopmentVariables.getDp();
+		this.minDist = DevelopmentVariables.getMinDist();
+		this.param1 = DevelopmentVariables.getParam1();
+		this.param2 = DevelopmentVariables.getParam2();
+		this.minRad = DevelopmentVariables.getMinRad();
+		this.maxRad = DevelopmentVariables.getMaxRad();
 	}
 
 	@Override

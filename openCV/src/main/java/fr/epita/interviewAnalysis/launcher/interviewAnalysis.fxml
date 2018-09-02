@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -40,15 +40,61 @@
                   <Label layoutX="11.0" layoutY="14.0" text="Filename:" />
           </children>
         </AnchorPane>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-          <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="510.0">
+      <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0">
+               <children>
+                  <ImageView fx:id="outputFrame" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" />
+                  <HBox alignment="CENTER" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <padding>
+                        <Insets bottom="25" left="25" right="25" top="25" />
+                     </padding>
                      <children>
-                        <ImageView fx:id="outputFrame" fitHeight="320.0" fitWidth="489.0" layoutX="115.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" />
+                        <Slider id="slider_dp" fx:id="slider_dp" blockIncrement="1.0" majorTickUnit="1.0" max="3.0" min="1.0" minorTickCount="0" onMouseReleased="#updateValues" showTickLabels="true" showTickMarks="true" value="1.0" />
+                        <Slider id="slider_minDest" fx:id="slider_minDist" majorTickUnit="10.0" max="50.0" min="1.0" minorTickCount="2" onMouseReleased="#updateValues" showTickLabels="true" showTickMarks="true" value="1.0" />
+                        <Slider id="slider_param1" fx:id="slider_param1" min="1.0" minorTickCount="25" onMouseReleased="#updateValues" showTickLabels="true" showTickMarks="true" value="1.0" />
+                        <Slider id="slider_param2" fx:id="slider_param2" min="1.0" onMouseReleased="#updateValues" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
+                        <Slider id="slider_minRad" fx:id="slider_minRad" majorTickUnit="5.0" max="20.0" min="1.0" onMouseReleased="#updateValues" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
+                        <Slider id="slider_maxRad" fx:id="slider_maxRad" majorTickUnit="5.0" max="20.0" min="1.0" onMouseReleased="#updateValues" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
                      </children>
-            </AnchorPane>
-          </content>
-        </ScrollPane>
+                  </HBox>
+                  <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <padding>
+                        <Insets bottom="25" left="25" right="25" top="25" />
+                     </padding>
+                     <children>
+                        <Label fx:id="lbl_dp" text="Label">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbl_minDist" text="Label">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbl_param1" text="Label">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbl_param2" text="Label">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbl_minRad" text="Label">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbl_maxRad" text="Label">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+      </AnchorPane>
         <AnchorPane>
           <children>
             <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Results:" textAlignment="CENTER" wrapText="false">
